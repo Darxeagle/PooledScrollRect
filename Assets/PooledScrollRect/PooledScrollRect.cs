@@ -74,7 +74,20 @@ public abstract class PooledScrollRect<T,Y> : MonoBehaviour where Y : PooledScro
             else
             {
                 RepurposeMethod repurposeMethod = numElementsCulledAbove > _lastCulledAbove ? RepurposeMethod.TopGoesToBottom : RepurposeMethod.BottomGoesToTop;
-                RepurposeElement(repurposeMethod, numElementsCulledAbove);
+                if (repurposeMethod == RepurposeMethod.TopGoesToBottom)
+                {
+                    for (int i = _lastCulledAbove + 1; i <= numElementsCulledAbove; i++)
+                    {
+                        RepurposeElement(repurposeMethod, i);
+                    }
+                }
+                else
+                {
+                    for (int i = _lastCulledAbove - 1; i >= numElementsCulledAbove; i--)
+                    {
+                        RepurposeElement(repurposeMethod, i);
+                    }
+                }
             }
         }
 
